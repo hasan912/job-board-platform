@@ -8,6 +8,7 @@ import { collection, query, where, getDocs, deleteDoc, doc } from "firebase/fire
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 
 interface Job {
   id: string
@@ -16,7 +17,7 @@ interface Job {
   location: string
   salary: string
   jobType: string
-  applicants: string[]
+  applications: any[]
   createdAt: any
 }
 
@@ -74,16 +75,28 @@ export default function EmployerJobs() {
 
   return (
     <div className="min-h-screen bg-background">
-      <nav className="border-b border-border">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/dashboard" className="text-2xl font-bold hover:opacity-80">
-            Job Board
-          </Link>
-          <Link href="/jobs/create">
-            <Button>Post New Job</Button>
-          </Link>
-        </div>
-      </nav>
+      <nav className="border-b border-border shadow-sm">
+  <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+    {/* Left Side - Logo */}
+    <Link
+      href="/dashboard"
+      className="text-2xl font-extrabold tracking-tight hover:opacity-80"
+    >
+      Job Board
+    </Link>
+
+    {/* Right Side - Buttons + ThemeToggle */}
+    <div className="flex items-center gap-3">
+      <Link href="/jobs/create">
+        <Button>Post New Job</Button>
+      </Link>
+      <Link href="/dashboard">
+        <Button variant="outline">Dashboard</Button>
+      </Link>
+      <ThemeToggle />
+    </div>
+  </div>
+</nav>
 
       <main className="container mx-auto px-4 py-12">
         <h1 className="text-3xl font-bold mb-8">My Job Postings</h1>
@@ -108,7 +121,7 @@ export default function EmployerJobs() {
                       <CardDescription>{job.company}</CardDescription>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-semibold text-primary">{job.applicants?.length || 0} applicants</p>
+                      <p className="text-sm font-semibold text-primary">{job.applications?.length || 0} applicants</p>
                       <p className="text-xs text-muted-foreground capitalize">{job.jobType}</p>
                     </div>
                   </div>
@@ -148,3 +161,4 @@ export default function EmployerJobs() {
     </div>
   )
 }
+

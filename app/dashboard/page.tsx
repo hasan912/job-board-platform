@@ -8,6 +8,7 @@ import { collection, query, where, getDocs } from "firebase/firestore"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 
 export default function Dashboard() {
   const { user, userProfile, loading, logout } = useAuth()
@@ -32,7 +33,11 @@ export default function Dashboard() {
       if (userProfile?.role === "employer") {
         const q = query(collection(db, "jobs"), where("employerId", "==", user?.uid))
         const snapshot = await getDocs(q)
-        setStats({ jobs: snapshot.size, applications: 0 })
+        let totalApplications = 0
+        snapshot.docs.forEach((doc) => {
+          totalApplications += doc.data().applications?.length || 0
+        })
+        setStats({ jobs: snapshot.size, applications: totalApplications })
       } else {
         const snapshot = await getDocs(collection(db, "jobs"))
         let applicationCount = 0
@@ -73,6 +78,7 @@ export default function Dashboard() {
             <Button variant="destructive" onClick={logout}>
               Logout
             </Button>
+            <ThemeToggle/>
           </div>
         </div>
       </nav>

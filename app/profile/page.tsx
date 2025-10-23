@@ -11,6 +11,7 @@ import { updatePassword } from "firebase/auth"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 
 interface UserProfile {
   uid: string
@@ -159,6 +160,7 @@ export default function Profile() {
             <Button variant="destructive" onClick={logout}>
               Logout
             </Button>
+            <ThemeToggle/>
           </div>
         </div>
       </nav>

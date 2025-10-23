@@ -8,6 +8,7 @@ import { doc, getDoc } from "firebase/firestore"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 
 interface Application {
   applicantId: string
@@ -85,17 +86,30 @@ export default function JobApplicants() {
 
   return (
     <div className="min-h-screen bg-background">
-      <nav className="border-b border-border">
+      <nav className="border-b border-border shadow-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/dashboard" className="text-2xl font-bold hover:opacity-80">
+          {/* Left Side - Logo */}
+          <Link
+            href="/dashboard"
+            className="text-2xl font-extrabold tracking-tight hover:opacity-80"
+          >
             Job Board
           </Link>
-          <Link href="/employer/jobs">
-            <Button variant="outline">Back to Jobs</Button>
-          </Link>
+
+          {/* Right Side - Buttons + ThemeToggle */}
+          <div className="flex items-center gap-3">
+            <Link href="/employer/jobs">
+
+              <Button> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+                Back to Jobs</Button>
+            </Link>
+            <Link href="/dashboard">
+              <Button variant="outline">Dashboard</Button>
+            </Link>
+            <ThemeToggle />
+          </div>
         </div>
       </nav>
-
       <main className="container mx-auto px-4 py-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">{job.title}</h1>

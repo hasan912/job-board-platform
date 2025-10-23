@@ -13,7 +13,7 @@ const firebaseConfig = {
 }
 
 if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
-  console.warn("[v0] Firebase configuration incomplete. Please check environment variables.")
+  console.warn("Firebase configuration incomplete. Please check environment variables.")
 }
 
 const app = initializeApp(firebaseConfig)
@@ -23,17 +23,17 @@ export const db = getFirestore(app)
 // Enable offline persistence
 enableIndexedDbPersistence(db)
   .then(() => {
-    console.log("[v0] Firestore offline persistence enabled")
+    console.log("Firestore offline persistence enabled")
   })
   .catch((err) => {
     if (err.code === 'failed-precondition') {
-      console.warn("[v0] Multiple tabs open, persistence can only be enabled in one tab at a time.")
+      console.warn("Multiple tabs open, persistence can only be enabled in one tab at a time.")
     } else if (err.code === 'unimplemented') {
-      console.warn("[v0] The current browser doesn't support offline persistence")
+      console.warn("The current browser doesn't support offline persistence")
     }
   })
 
 // Enable network access
 enableNetwork(db).catch((error) => {
-  console.warn("[v0] Failed to enable Firestore network:", error.message)
+  console.warn("Failed to enable Firestore network:", error.message)
 })

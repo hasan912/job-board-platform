@@ -55,7 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           if (userDoc?.exists()) {
             setUserProfile(userDoc.data() as UserProfile)
           } else {
-            console.warn("[v0] User profile not found in Firestore")
+            console.warn("User profile not found in Firestore")
             setUserProfile({
               uid: currentUser.uid,
               email: currentUser.email || "",
@@ -65,7 +65,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             })
           }
         } catch (error) {
-          console.error("[v0] Error fetching user profile:", error)
+          console.error("Error fetching user profile:", error)
           setUserProfile({
             uid: currentUser.uid,
             email: currentUser.email || "",
