@@ -143,7 +143,7 @@ export default function JobDetail() {
       </nav>
 
       <main className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8">
           <div className="col-span-2">
             <Card>
               <CardHeader>
@@ -181,9 +181,9 @@ export default function JobDetail() {
           </div>
 
           <div>
-            <Card>
+            <Card >
               <CardHeader>
-                <CardTitle>Apply Now</CardTitle>
+                <CardTitle className="text-center">Apply Now</CardTitle>
               </CardHeader>
               <CardContent>
                 {hasApplied ? (
