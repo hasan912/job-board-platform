@@ -88,7 +88,7 @@ export default function Dashboard() {
           <div className="relative">
             <div className="absolute inset-0 bg-linear-to-r from-primary/10 to-background blur-3xl -z-10"></div>
             <div className="relative bg-card p-6 rounded-lg border border-border/50 shadow-sm">
-              <h2 className="text-2xl font-medium mb-1">Welcome back, {userProfile.name}</h2>
+              <h2 className="text-2xl font-medium mb-1">Welcome back, {userProfile.name} 👋</h2>
               <p className="text-muted-foreground text-sm">
                 Logged in as <span className="font-medium capitalize">{userProfile.role}</span>
               </p>

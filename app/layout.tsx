@@ -5,7 +5,7 @@ import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { AuthProvider } from "@/lib/auth-context"
 import { ThemeProvider } from "@/components/theme-provider"
-import Footer from "@/components/ui/footer"
+import FooterClient from "@/components/ui/footer-client"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -27,7 +27,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthProvider>
             {children}
-            <Footer />
+            <FooterClient />
           </AuthProvider>
           <Analytics />
         </ThemeProvider>
