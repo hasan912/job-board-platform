@@ -64,25 +64,19 @@ export default function CreateJob() {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
-      <nav className="bg-background/95 backdrop-blur-sm sticky top-0 z-50 border-b border-border">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/dashboard" className="text-2xl font-bold hover:opacity-80 flex items-center gap-2">
-            <span className="text-primary">Job</span> Board
-          </Link>
-          <div className="flex items-center gap-2">
+      <nav className="border-b border-border backdrop-blur-sm bg-background/80 sticky top-0 z-50">
+        <div className="container mx-auto px-6 py-3 flex justify-between items-center">
+          <h1 className="text-xl font-semibold tracking-tight">Job Board</h1>
+          <div className="flex gap-3 items-center">
             <Link href="/employer/jobs">
-              <Button variant="outline" className="gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
-                Back to Jobs
-              </Button>
+              <Button variant="ghost" size="sm" className="hover:bg-accent">Back To Job</Button>
             </Link>
-            <Link href="/profile">
-              <Button variant="outline" className="gap-2 bg-black text-white">
-                
-                Profile
-              </Button>
+            <Link href={"/dashboard"}>
+            <Button variant="ghost" size="sm" className="hover:bg-accent">
+              Dashboard
+            </Button>
             </Link>
-            <ThemeToggle />
+            <ThemeToggle/>
           </div>
         </div>
       </nav>
@@ -176,6 +170,7 @@ export default function CreateJob() {
                       <option value="full-time">Full-time</option>
                       <option value="part-time">Part-time</option>
                       <option value="contract">Contract</option>
+                      <option value="Remote">Remote</option>
                       <option value="internship">Internship</option>
                     </select>
                   </div>

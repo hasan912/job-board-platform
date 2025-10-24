@@ -5,14 +5,15 @@ import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { AuthProvider } from "@/lib/auth-context"
 import { ThemeProvider } from "@/components/theme-provider"
+import Footer from "@/components/ui/footer"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "v0 App",
-  description: "Created with v0",
-  generator: "v0.app",
+  title: "Job Board App",
+  description: "Created with Next.js, Firebase, and Tailwind CSS developed by MUuhammad Hasan Baig",
+  generator: "Muhammad Hasan Baig",
 }
 
 export default function RootLayout({
@@ -24,7 +25,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`font-sans antialiased`} cz-shortcut-listen="true">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            {children}
+            <Footer />
+          </AuthProvider>
           <Analytics />
         </ThemeProvider>
       </body>

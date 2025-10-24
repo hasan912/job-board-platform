@@ -28,7 +28,7 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-background to-secondary">
+    <main className="min-h-screen bg-linear-to-br from-background to-secondary">
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-2xl mx-auto text-center">
           <h1 className="text-5xl font-bold mb-6 text-foreground">Job Board Platform</h1>

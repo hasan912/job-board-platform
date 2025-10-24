@@ -86,27 +86,19 @@ export default function JobApplicants() {
 
   return (
     <div className="min-h-screen bg-background">
-      <nav className="border-b border-border shadow-sm">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          {/* Left Side - Logo */}
-          <Link
-            href="/dashboard"
-            className="text-2xl font-extrabold tracking-tight hover:opacity-80"
-          >
-            Job Board
-          </Link>
-
-          {/* Right Side - Buttons + ThemeToggle */}
-          <div className="flex items-center gap-3">
+      <nav className="border-b border-border backdrop-blur-sm bg-background/80 sticky top-0 z-50">
+        <div className="container mx-auto px-6 py-3 flex justify-between items-center">
+          <h1 className="text-xl font-semibold tracking-tight">Job Board</h1>
+          <div className="flex gap-3 items-center">
             <Link href="/employer/jobs">
-
-              <Button> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
-                Back to Jobs</Button>
+              <Button variant="ghost" size="sm" className="hover:bg-accent">Back To Job</Button>
             </Link>
-            <Link href="/dashboard">
-              <Button variant="outline">Dashboard</Button>
+            <Link href={"/dashboard"}>
+            <Button variant="ghost" size="sm" className="hover:bg-accent">
+              Dashboard
+            </Button>
             </Link>
-            <ThemeToggle />
+            <ThemeToggle/>
           </div>
         </div>
       </nav>

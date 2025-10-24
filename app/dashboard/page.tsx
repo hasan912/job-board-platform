@@ -68,14 +68,14 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-background">
-      <nav className="border-b border-border">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Job Board</h1>
-          <div className="flex gap-4 items-center">
+      <nav className="border-b border-border backdrop-blur-sm bg-background/80 sticky top-0 z-50">
+        <div className="container mx-auto px-6 py-3 flex justify-between items-center">
+          <h1 className="text-xl font-semibold tracking-tight">Job Board</h1>
+          <div className="flex gap-3 items-center">
             <Link href="/profile">
-              <Button variant="outline">Profile</Button>
+              <Button variant="ghost" size="sm" className="hover:bg-accent">Profile</Button>
             </Link>
-            <Button variant="destructive" onClick={logout}>
+            <Button variant="ghost" size="sm" onClick={logout} className="text-destructive hover:bg-destructive/10">
               Logout
             </Button>
             <ThemeToggle/>
@@ -83,57 +83,60 @@ export default function Dashboard() {
         </div>
       </nav>
 
-      <main className="container mx-auto px-4 py-12">
-        <div className="max-w-4xl">
-          <div className="mb-8">
-            <h2 className="text-3xl font-bold mb-2">Welcome, {userProfile.name}!</h2>
-            <p className="text-muted-foreground">
-              You are logged in as an <span className="font-semibold capitalize">{userProfile.role}</span>
-            </p>
+      <main className="container mx-auto px-6 py-8">
+        <div className="max-w-5xl mx-auto space-y-8">
+          <div className="relative">
+            <div className="absolute inset-0 bg-linear-to-r from-primary/10 to-background blur-3xl -z-10"></div>
+            <div className="relative bg-card p-6 rounded-lg border border-border/50 shadow-sm">
+              <h2 className="text-2xl font-medium mb-1">Welcome back, {userProfile.name}</h2>
+              <p className="text-muted-foreground text-sm">
+                Logged in as <span className="font-medium capitalize">{userProfile.role}</span>
+              </p>
+            </div>
           </div>
 
           {/* Stats Cards */}
           {!loadingStats && (
-            <div className="grid grid-cols-2 gap-4 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {userProfile.role === "employer" ? (
                 <>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-lg">Active Job Postings</CardTitle>
+                  <Card className="group hover:border-primary/50 transition-all">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-base font-medium">Active Job Postings</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-3xl font-bold">{stats.jobs}</p>
-                      <p className="text-sm text-muted-foreground mt-2">Jobs you've posted</p>
+                      <p className="text-2xl font-semibold group-hover:text-primary transition-colors">{stats.jobs}</p>
+                      <p className="text-xs text-muted-foreground mt-1">Total jobs posted</p>
                     </CardContent>
                   </Card>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-lg">Total Applications</CardTitle>
+                  <Card className="group hover:border-primary/50 transition-all">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-base font-medium">Total Applications</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-3xl font-bold">{stats.applications}</p>
-                      <p className="text-sm text-muted-foreground mt-2">Received from applicants</p>
+                      <p className="text-2xl font-semibold group-hover:text-primary transition-colors">{stats.applications}</p>
+                      <p className="text-xs text-muted-foreground mt-1">Applications received</p>
                     </CardContent>
                   </Card>
                 </>
               ) : (
                 <>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-lg">Applications Submitted</CardTitle>
+                  <Card className="group hover:border-primary/50 transition-all">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-base font-medium">Applications Submitted</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-3xl font-bold">{stats.applications}</p>
-                      <p className="text-sm text-muted-foreground mt-2">Jobs you've applied to</p>
+                      <p className="text-2xl font-semibold group-hover:text-primary transition-colors">{stats.applications}</p>
+                      <p className="text-xs text-muted-foreground mt-1">Total applications</p>
                     </CardContent>
                   </Card>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-lg">Available Jobs</CardTitle>
+                  <Card className="group hover:border-primary/50 transition-all">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-base font-medium">Available Jobs</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-3xl font-bold">Browse</p>
-                      <p className="text-sm text-muted-foreground mt-2">Find your next opportunity</p>
+                      <p className="text-2xl font-semibold group-hover:text-primary transition-colors">Browse</p>
+                      <p className="text-xs text-muted-foreground mt-1">Find new opportunities</p>
                     </CardContent>
                   </Card>
                 </>
@@ -142,30 +145,34 @@ export default function Dashboard() {
           )}
 
           {/* Quick Actions */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Quick Actions</CardTitle>
-              <CardDescription>Get started with your next step</CardDescription>
+          <Card className="overflow-hidden ">
+            <CardHeader className="border-b ">
+              <CardTitle className="text-base font-medium">Quick Actions</CardTitle>
+              <CardDescription className="text-xs">Get started with your next step</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-4">
               {userProfile.role === "employer" ? (
-                <div className="grid grid-cols-2 gap-4">
-                  <Link href="/jobs/create">
-                    <Button className="w-full">Post a New Job</Button>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <Link href="/jobs/create" className="w-full">
+                    <Button className="w-full bg-primary/90 hover:bg-primary" size="sm">
+                      Post a New Job
+                    </Button>
                   </Link>
-                  <Link href="/employer/jobs">
-                    <Button variant="outline" className="w-full bg-transparent">
+                  <Link href="/employer/jobs" className="w-full">
+                    <Button variant="outline" size="sm" className="w-full hover:bg-accent">
                       View My Jobs
                     </Button>
                   </Link>
                 </div>
               ) : (
-                <div className="grid grid-cols-2 gap-4">
-                  <Link href="/jobs">
-                    <Button className="w-full">Browse Jobs</Button>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <Link href="/jobs" className="w-full">
+                    <Button className="w-full bg-primary/90 hover:bg-primary" size="sm">
+                      Browse Jobs
+                    </Button>
                   </Link>
-                  <Link href="/applicant/applications">
-                    <Button variant="outline" className="w-full bg-transparent">
+                  <Link href="/applicant/applications" className="w-full">
+                    <Button variant="outline" size="sm" className="w-full hover:bg-accent">
                       My Applications
                     </Button>
                   </Link>

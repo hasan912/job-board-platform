@@ -146,229 +146,253 @@ export default function Profile() {
     return null
   }
 
+  // compute simple initials for avatar
+  const initials = profile?.name
+    ? profile.name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .slice(0, 2)
+        .toUpperCase()
+    : "U"
+
   return (
     <div className="min-h-screen bg-background">
-      <nav className="border-b border-border">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/dashboard" className="text-2xl font-bold hover:opacity-80">
-            Job Board
+      <nav className="border-b border-border backdrop-blur-sm bg-background/80 sticky top-0 z-50">
+        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+          <Link href="/dashboard" className="flex items-center">
+            <h1 className="text-xl font-semibold tracking-tight">Job Board</h1>
           </Link>
-          <div className="flex gap-4">
+          <div className="flex gap-3 items-center">
             <Link href="/dashboard">
-              <Button variant="outline">Dashboard</Button>
+              <Button variant="ghost" size="sm" className="hover:bg-accent">Dashboard</Button>
             </Link>
-            <Button variant="destructive" onClick={logout}>
-              Logout
-            </Button>
-            <ThemeToggle/>
+            <Button variant="ghost" size="sm" onClick={logout} className="text-destructive hover:bg-destructive/10">Logout</Button>
+            <ThemeToggle />
           </div>
         </div>
       </nav>
 
       <main className="container mx-auto px-4 py-12">
-        <div className="max-w-2xl">
-          <h1 className="text-3xl font-bold mb-8">My Profile</h1>
-
-          {error && (
-            <Card className="mb-6 border-destructive bg-destructive/5">
-              <CardContent className="pt-6">
-                <p className="text-destructive text-sm">{error}</p>
-              </CardContent>
-            </Card>
-          )}
-
-          {success && (
-            <Card className="mb-6 border-green-600 bg-green-50">
-              <CardContent className="pt-6">
-                <p className="text-green-600 text-sm">{success}</p>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Profile Information */}
-          <Card className="mb-6">
-            <CardHeader className="flex flex-row justify-between items-start">
-              <div>
-                <CardTitle>Profile Information</CardTitle>
-                <CardDescription>Manage your account details</CardDescription>
-              </div>
-              <Button variant="outline" onClick={() => setIsEditing(!isEditing)} className="bg-transparent">
-                {isEditing ? "Cancel" : "Edit"}
-              </Button>
-            </CardHeader>
-            <CardContent>
-              {!isEditing ? (
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-sm text-muted-foreground">Name</p>
-                    <p className="font-medium">{profile.name}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Email</p>
-                    <p className="font-medium">{profile.email}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Role</p>
-                    <p className="font-medium capitalize">{profile.role}</p>
-                  </div>
-                  {(profile as any).bio && (
-                    <div>
-                      <p className="text-sm text-muted-foreground">Bio</p>
-                      <p className="font-medium">{(profile as any).bio}</p>
-                    </div>
-                  )}
-                  {(profile as any).phone && (
-                    <div>
-                      <p className="text-sm text-muted-foreground">Phone</p>
-                      <p className="font-medium">{(profile as any).phone}</p>
-                    </div>
-                  )}
-                  {(profile as any).website && (
-                    <div>
-                      <p className="text-sm text-muted-foreground">Website</p>
-                      <a href={(profile as any).website} target="_blank" rel="noopener noreferrer">
-                        <p className="font-medium text-primary hover:underline">{(profile as any).website}</p>
-                      </a>
-                    </div>
-                  )}
-                  {(profile as any).company && (
-                    <div>
-                      <p className="text-sm text-muted-foreground">Company</p>
-                      <p className="font-medium">{(profile as any).company}</p>
-                    </div>
-                  )}
-                  <div>
-                    <p className="text-sm text-muted-foreground">Member Since</p>
-                    <p className="font-medium">{new Date(profile.createdAt).toLocaleDateString()}</p>
-                  </div>
+        <div className="max-w-4xl mx-auto grid gap-8 md:grid-cols-3">
+          <aside className="md:col-span-1">
+            <Card className="text-center">
+              <CardContent className="space-y-4">
+                <div className="mx-auto w-28 h-28 rounded-full bg-muted flex items-center justify-center text-2xl font-semibold text-foreground">
+                  {initials}
                 </div>
-              ) : (
-                <form onSubmit={handleSaveProfile} className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Name</label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-input rounded-md bg-background"
-                      required
-                    />
-                  </div>
+                <div>
+                  <h2 className="text-lg font-bold">{profile.name}</h2>
+                  <p className="text-sm text-muted-foreground capitalize">{profile.role}</p>
+                </div>
+                <div className="space-y-2 pt-2">
+                  {profile.role === "employer" ? (
+                    <Link href="/jobs/create">
+                      <Button variant="outline" className="w-full">Post New Job</Button>
+                    </Link>
+                  ) : (
+                    <Link href="/jobs">
+                      <Button variant="outline" className="w-full">Browse Jobs</Button>
+                    </Link>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+            {error && (
+              <Card className="mt-4 border-destructive bg-destructive/5">
+                <CardContent>
+                  <p className="text-destructive text-sm">{error}</p>
+                </CardContent>
+              </Card>
+            )}
+            {success && (
+              <Card className="mt-4 border-green-600 bg-green-50">
+                <CardContent>
+                  <p className="text-green-600 text-sm">{success}</p>
+                </CardContent>
+              </Card>
+            )}
+          </aside>
 
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Bio</label>
-                    <textarea
-                      name="bio"
-                      value={formData.bio}
-                      onChange={handleInputChange}
-                      rows={3}
-                      className="w-full px-3 py-2 border border-input rounded-md bg-background"
-                      placeholder="Tell us about yourself..."
-                    />
+          <section className="md:col-span-2">
+            <Card className="mb-6">
+              <CardHeader className="flex items-start justify-between">
+                <div>
+                  <CardTitle>Profile</CardTitle>
+                  <CardDescription>Manage your account details</CardDescription>
+                </div>
+                <Button variant="outline" onClick={() => setIsEditing(!isEditing)}>
+                  {isEditing ? 'Cancel' : 'Edit'}
+                </Button>
+              </CardHeader>
+              <CardContent>
+                {!isEditing ? (
+                  <div className="grid gap-6 md:grid-cols-2">
+                    <div className="space-y-4">
+                      <div>
+                        <p className="text-sm text-muted-foreground">Name</p>
+                        <p className="font-medium">{profile.name}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground">Email</p>
+                        <p className="font-medium">{profile.email}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground">Member Since</p>
+                        <p className="font-medium">{new Date(profile.createdAt).toLocaleDateString()}</p>
+                      </div>
+                    </div>
+                    <div className="space-y-4">
+                      {(profile as any).bio && (
+                        <div>
+                          <p className="text-sm text-muted-foreground">Bio</p>
+                          <p className="font-medium">{(profile as any).bio}</p>
+                        </div>
+                      )}
+                      {(profile as any).phone && (
+                        <div>
+                          <p className="text-sm text-muted-foreground">Phone</p>
+                          <p className="font-medium">{(profile as any).phone}</p>
+                        </div>
+                      )}
+                      {(profile as any).website && (
+                        <div>
+                          <p className="text-sm text-muted-foreground">Website</p>
+                          <a href={(profile as any).website} target="_blank" rel="noopener noreferrer">
+                            <p className="font-medium text-primary hover:underline">{(profile as any).website}</p>
+                          </a>
+                        </div>
+                      )}
+                      {(profile as any).company && (
+                        <div>
+                          <p className="text-sm text-muted-foreground">Company</p>
+                          <p className="font-medium">{(profile as any).company}</p>
+                        </div>
+                      )}
+                    </div>
                   </div>
+                ) : (
+                  <form onSubmit={handleSaveProfile} className="space-y-4">
+                    <div className="grid gap-6 md:grid-cols-2">
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Name</label>
+                        <input
+                          type="text"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleInputChange}
+                          className="w-full px-3 py-2 border border-input rounded-md bg-background"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Phone</label>
+                        <input
+                          type="tel"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleInputChange}
+                          className="w-full px-3 py-2 border border-input rounded-md bg-background"
+                          placeholder="+1 (555) 000-0000"
+                        />
+                      </div>
+                    </div>
 
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Phone</label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-input rounded-md bg-background"
-                      placeholder="+1 (555) 000-0000"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Website</label>
-                    <input
-                      type="url"
-                      name="website"
-                      value={formData.website}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-input rounded-md bg-background"
-                      placeholder="https://example.com"
-                    />
-                  </div>
-
-                  {profile.role === "employer" && (
                     <div>
-                      <label className="block text-sm font-medium mb-2">Company</label>
-                      <input
-                        type="text"
-                        name="company"
-                        value={formData.company}
+                      <label className="block text-sm font-medium mb-2">Bio</label>
+                      <textarea
+                        name="bio"
+                        value={formData.bio}
                         onChange={handleInputChange}
+                        rows={3}
                         className="w-full px-3 py-2 border border-input rounded-md bg-background"
-                        placeholder="Your company name"
+                        placeholder="Tell us about yourself..."
                       />
                     </div>
-                  )}
 
-                  <Button type="submit" disabled={saving}>
-                    {saving ? "Saving..." : "Save Changes"}
-                  </Button>
-                </form>
-              )}
-            </CardContent>
-          </Card>
+                    <div className="grid gap-6 md:grid-cols-2">
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Website</label>
+                        <input
+                          type="url"
+                          name="website"
+                          value={formData.website}
+                          onChange={handleInputChange}
+                          className="w-full px-3 py-2 border border-input rounded-md bg-background"
+                          placeholder="https://example.com"
+                        />
+                      </div>
+                      {profile.role === "employer" && (
+                        <div>
+                          <label className="block text-sm font-medium mb-2">Company</label>
+                          <input
+                            type="text"
+                            name="company"
+                            value={formData.company}
+                            onChange={handleInputChange}
+                            className="w-full px-3 py-2 border border-input rounded-md bg-background"
+                            placeholder="Your company name"
+                          />
+                        </div>
+                      )}
+                    </div>
 
-          {/* Security Section */}
-          <Card>
-            <CardHeader className="flex flex-row justify-between items-start">
-              <div>
-                <CardTitle>Security</CardTitle>
-                <CardDescription>Manage your password and security settings</CardDescription>
-              </div>
-              <Button
-                variant="outline"
-                onClick={() => setShowPasswordForm(!showPasswordForm)}
-                className="bg-transparent"
-              >
-                {showPasswordForm ? "Cancel" : "Change Password"}
-              </Button>
-            </CardHeader>
-            <CardContent>
-              {!showPasswordForm ? (
+                    <div className="flex gap-4">
+                      <Button type="submit" disabled={saving}>{saving ? "Saving..." : "Save Changes"}</Button>
+                      <Button variant="outline" onClick={() => { setIsEditing(false); setFormData({ name: profile.name || '', bio: (profile as any).bio || '', phone: (profile as any).phone || '', website: (profile as any).website || '', company: (profile as any).company || '' }); }}>Cancel</Button>
+                    </div>
+                  </form>
+                )}
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row justify-between items-start">
                 <div>
-                  <p className="text-sm text-muted-foreground">Last password change: Not available in this version</p>
+                  <CardTitle>Security</CardTitle>
+                  <CardDescription>Manage your password and security settings</CardDescription>
                 </div>
-              ) : (
-                <form onSubmit={handleChangePassword} className="space-y-4">
+                <Button variant="outline" onClick={() => setShowPasswordForm(!showPasswordForm)}>{showPasswordForm ? "Cancel" : "Change Password"}</Button>
+              </CardHeader>
+              <CardContent>
+                {!showPasswordForm ? (
                   <div>
-                    <label className="block text-sm font-medium mb-2">New Password</label>
-                    <input
-                      type="password"
-                      name="newPassword"
-                      value={passwordData.newPassword}
-                      onChange={handlePasswordChange}
-                      className="w-full px-3 py-2 border border-input rounded-md bg-background"
-                      placeholder="Enter new password"
-                      required
-                    />
+                    <p className="text-sm text-muted-foreground">Last password change: Not available in this version</p>
                   </div>
+                ) : (
+                  <form onSubmit={handleChangePassword} className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">New Password</label>
+                      <input
+                        type="password"
+                        name="newPassword"
+                        value={passwordData.newPassword}
+                        onChange={handlePasswordChange}
+                        className="w-full px-3 py-2 border border-input rounded-md bg-background"
+                        placeholder="Enter new password"
+                        required
+                      />
+                    </div>
 
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Confirm Password</label>
-                    <input
-                      type="password"
-                      name="confirmPassword"
-                      value={passwordData.confirmPassword}
-                      onChange={handlePasswordChange}
-                      className="w-full px-3 py-2 border border-input rounded-md bg-background"
-                      placeholder="Confirm new password"
-                      required
-                    />
-                  </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Confirm Password</label>
+                      <input
+                        type="password"
+                        name="confirmPassword"
+                        value={passwordData.confirmPassword}
+                        onChange={handlePasswordChange}
+                        className="w-full px-3 py-2 border border-input rounded-md bg-background"
+                        placeholder="Confirm new password"
+                        required
+                      />
+                    </div>
 
-                  <Button type="submit" disabled={saving}>
-                    {saving ? "Updating..." : "Update Password"}
-                  </Button>
-                </form>
-              )}
-            </CardContent>
-          </Card>
+                    <Button type="submit" disabled={saving}>{saving ? "Updating..." : "Update Password"}</Button>
+                  </form>
+                )}
+              </CardContent>
+            </Card>
+          </section>
         </div>
       </main>
     </div>

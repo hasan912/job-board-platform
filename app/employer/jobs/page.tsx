@@ -75,28 +75,22 @@ export default function EmployerJobs() {
 
   return (
     <div className="min-h-screen bg-background">
-      <nav className="border-b border-border shadow-sm">
-  <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-    {/* Left Side - Logo */}
-    <Link
-      href="/dashboard"
-      className="text-2xl font-extrabold tracking-tight hover:opacity-80"
-    >
-      Job Board
-    </Link>
-
-    {/* Right Side - Buttons + ThemeToggle */}
-    <div className="flex items-center gap-3">
-      <Link href="/jobs/create">
-        <Button>Post New Job</Button>
-      </Link>
-      <Link href="/dashboard">
-        <Button variant="outline">Dashboard</Button>
-      </Link>
-      <ThemeToggle />
-    </div>
-  </div>
-</nav>
+      <nav className="border-b border-border backdrop-blur-sm bg-background/80 sticky top-0 z-50">
+        <div className="container mx-auto px-6 py-3 flex justify-between items-center">
+          <h1 className="text-xl font-semibold tracking-tight">Job Board</h1>
+          <div className="flex gap-3 items-center">
+            <Link href="/jobs/create">
+              <Button variant="ghost" size="sm" className="hover:bg-accent">Post New Job</Button>
+            </Link>
+            <Link href={"/dashboard"}>
+            <Button variant="ghost" size="sm" className="hover:bg-accent">
+              Dashboard
+            </Button>
+            </Link>
+            <ThemeToggle/>
+          </div>
+        </div>
+      </nav>
 
       <main className="container mx-auto px-4 py-12">
         <h1 className="text-3xl font-bold mb-8">My Job Postings</h1>

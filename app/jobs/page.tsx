@@ -47,6 +47,7 @@ export default function JobListings() {
   })
   const [locations, setLocations] = useState<string[]>([])
   const [jobTypes, setJobTypes] = useState<string[]>([])
+  const [showFiltersMobile, setShowFiltersMobile] = useState(false)
 
   useEffect(() => {
     if (!loading && !user) {
@@ -167,22 +168,30 @@ export default function JobListings() {
           </Link>
           <div className="flex gap-4">
             <Link href="/applicant/applications">
-              <Button variant="outline">My Applications</Button>
+              <Button variant="ghost" className="hover:bg-accent">My Applications</Button>
             </Link>
-            <Link href="/profile">
-              <Button variant="outline">Profile</Button>
+            <Link href="/dashboard">
+              <Button variant="ghost" className="hover:bg-accent">Dashboard</Button>
             </Link>
           </div>
         </div>
       </nav>
 
       <main className="container mx-auto px-4 py-12">
-        <h1 className="text-3xl font-bold mb-8">Available Jobs</h1>
+        <h1 className="text-3xl font-bold mb-4">Available Jobs</h1>
 
-        <div className="grid grid-cols-4 gap-8">
+        {/* Mobile: toggle filters */}
+        <div className="mb-4 md:hidden flex items-center justify-between">
+          <p className="text-sm text-muted-foreground">Showing {filteredJobs.length} of {jobs.length} jobs</p>
+          <Button variant="outline" size="sm" onClick={() => setShowFiltersMobile((s) => !s)}>
+            {showFiltersMobile ? "Hide Filters" : "Show Filters"}
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Filters Sidebar */}
-          <div className="col-span-1">
-            <Card className="sticky top-4">
+          <div className={`${showFiltersMobile ? "block" : "hidden"} md:block md:col-span-1`}>
+            <Card className="md:sticky md:top-4">
               <CardHeader>
                 <CardTitle className="text-lg">Filters</CardTitle>
               </CardHeader>
@@ -267,8 +276,8 @@ export default function JobListings() {
           </div>
 
           {/* Job Listings */}
-          <div className="col-span-3">
-            <div className="mb-4 flex justify-between items-center">
+          <div className="col-span-1 md:col-span-3">
+            <div className="mb-4 hidden md:flex justify-between items-center">
               <p className="text-sm text-muted-foreground">
                 Showing {filteredJobs.length} of {jobs.length} jobs
               </p>
@@ -299,7 +308,7 @@ export default function JobListings() {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <div className="grid grid-cols-3 gap-4 mb-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
                         <div>
                           <p className="text-sm text-muted-foreground">Location</p>
                           <p className="font-medium">{job.location}</p>

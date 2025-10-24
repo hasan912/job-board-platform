@@ -53,7 +53,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           }
 
           if (userDoc?.exists()) {
-            setUserProfile(userDoc.data() as UserProfile)
+            const data = userDoc.data() as any
+            // normalize profile fields and provide sensible fallbacks
+            setUserProfile({
+              uid: data.uid || currentUser.uid,
+              email: data.email || currentUser.email || "",
+              role: data.role || "applicant",
+              name: data.name || currentUser.displayName || "User",
+              createdAt: data.createdAt || new Date().toISOString(),
+            })
           } else {
             console.warn("User profile not found in Firestore")
             setUserProfile({

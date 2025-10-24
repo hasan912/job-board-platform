@@ -8,6 +8,7 @@ import { collection, getDocs } from "firebase/firestore"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 
 interface Application {
   jobId: string
@@ -78,14 +79,20 @@ export default function MyApplications() {
 
   return (
     <div className="min-h-screen bg-background">
-      <nav className="border-b border-border">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/dashboard" className="text-2xl font-bold hover:opacity-80">
-            Job Board
-          </Link>
-          <Link href="/jobs">
-            <Button variant="outline">Browse Jobs</Button>
-          </Link>
+      <nav className="border-b border-border backdrop-blur-sm bg-background/80 sticky top-0 z-50">
+        <div className="container mx-auto px-6 py-3 flex justify-between items-center">
+          <h1 className="text-xl font-semibold tracking-tight">Job Board</h1>
+          <div className="flex gap-3 items-center">
+            <Link href="/jobs">
+              <Button variant="ghost" size="sm" className="hover:bg-accent">Browse Jobs</Button>
+            </Link>
+            <Link href={"/dashboard"}>
+            <Button variant="ghost" size="sm" className="text-destructive hover:bg-destructive/10">
+              Dashboard
+            </Button>
+            </Link>
+            <ThemeToggle/>
+          </div>
         </div>
       </nav>
 
